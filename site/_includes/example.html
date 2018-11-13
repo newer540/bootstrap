@@ -18,14 +18,15 @@ optional: hide_markup - disabled (default)
 
 {%- if include.hide_markup == null -%}
   {%- highlight html -%}
-    {%- if include.content contains 'data-src="holder.js' -%}
+    {%- if include.content contains '<svg class="bd-placeholder-img' -%}
       {%- assign modified_content = include.content
-        | replace: 'data-src="holder.js', 'src="✂️holder.js'
-        | replace: '" ', '✂️" '
+        | replace: '<svg class="bd-placeholder-img ', '✂️<img class="'
+        | replace: '<svg class="bd-placeholder-img', '✂️<img class="'
+        | replace: ' width="', ' alt="..."✂️'
         | split: '✂️' -%}
 
       {%- for content_chunk in modified_content -%}
-        {%- if content_chunk contains 'holder.js' -%}
+        {%- if content_chunk contains '✂️' -%}
           {{- "..." -}}
         {%- else -%}
           {{- content_chunk -}}
